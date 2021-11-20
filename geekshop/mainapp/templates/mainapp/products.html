@@ -19,11 +19,9 @@
 
             <h1 class="my-4">GeekShop</h1>
             <div class="list-group">
-                <a href="#" class="list-group-item">Новинки</a>
-                <a href="#" class="list-group-item">Одежда</a>
-                <a href="#" class="list-group-item">Обувь</a>
-                <a href="#" class="list-group-item">Аксессуары</a>
-                <a href="#" class="list-group-item">Подарки</a>
+                {% for point in menu %}
+                <a href="#" class="list-group-item">{{ point.point }}</a>
+                {% endfor %}
             </div>
 
         </div>

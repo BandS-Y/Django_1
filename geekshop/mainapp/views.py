@@ -32,7 +32,14 @@ def products(request):
             {'name': 'Худи черного цвета с монограммами adidas Originals', 'price': 6090,
              'about': 'Мягкая ткань для свитшотов. Стиль и комфорт – это образ жизни.',
              'image' : 'vendor/img/products/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png'},
-        ]
+        ],
+        'menu' : [
+            {'point': 'Новинки'},
+            {'point': 'Одежда'},
+            {'point': 'Обувь'},
+            {'point': 'Аксессуары'},
+            {'point': 'Подарки'},
+        ],
     }
     return render(request, 'mainapp/products.html', context)
 
