@@ -19,8 +19,8 @@
 
             <h1 class="my-4">GeekShop</h1>
             <div class="list-group">
-                {% for point in menu %}
-                <a href="#" class="list-group-item">{{ point.point }}</a>
+                {% for category in categorys %}
+                    <a href="#" class="list-group-item">{{ category.name }}</a>
                 {% endfor %}
             </div>
 

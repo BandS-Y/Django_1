@@ -16,6 +16,7 @@ def index(request):
 
 def products(request):
     products = Product.objects.all()
+
     # file_path = os.path.join(MODULE_DIR, 'fixtures/goods.json')
     context = {
         'title' : 'myshop - Каталог',
@@ -51,6 +52,7 @@ def products(request):
     }
     # context['products'] = json.load(open(file_path, encoding='utf-8'))
 
+    context['categorys'] = ProductCategory.objects.all()
     return render(request, 'mainapp/products.html', context)
 
 def base(request):
