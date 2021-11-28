@@ -1,8 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
 from django.urls import reverse
+
+from baskets.models import Basket
+
 
 def login(request):
     if request.method == 'POST':
@@ -10,7 +14,7 @@ def login(request):
         if form.is_valid():
             username = request.POST.get('username')
             password = request.POST.get('password')
-            user = auth.authenticate(username=username, password =password)
+            user = auth.authenticate(username=username, password=password)
             if user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
@@ -20,30 +24,33 @@ def login(request):
         form = UserLoginForm()
 
     context = {
-        'title' : 'myshop | login',
+        'title': 'myshop | login',
         'naviname': 'myshop',
-        'form' : form
+        'form': form
     }
     return render(request, 'authapp/login.html', context)
+
 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request,'Вы успешно зарегистрировались')
+            messages.success(request, 'Вы успешно зарегистрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
         else:
             print(form.errors)
     else:
         form = UserRegisterForm()
     context = {
-        'title' : 'myshop | registration',
+        'title': 'myshop | registration',
         'naviname': 'myshop',
         'form': UserProfilerForm()
     }
     return render(request, 'authapp/register.html', context)
 
+
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
@@ -55,9 +62,11 @@ def profile(request):
 
     context = {
         'title': 'myshop | profile',
-        'form' : UserProfilerForm(instance=request.user)
+        'form': UserProfilerForm(instance=request.user),
+        'baskets': Basket.objects.filter(user=request.user)
     }
     return render(request, 'authapp/profile.html', context)
+
 
 def logout(request):
     auth.logout(request)
