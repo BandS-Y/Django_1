@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
 from django.urls import reverse
 
 def login(request):
@@ -40,9 +40,24 @@ def register(request):
     context = {
         'title' : 'myshop | registration',
         'naviname': 'myshop',
-        'form': form
+        'form': UserProfilerForm()
     }
     return render(request, 'authapp/register.html', context)
+
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Данные успешно изменены')
+        else:
+            print(form.errors)
+
+    context = {
+        'title': 'myshop | profile',
+        'form' : UserProfilerForm(instance=request.user)
+    }
+    return render(request, 'authapp/profile.html', context)
 
 def logout(request):
     auth.logout(request)
