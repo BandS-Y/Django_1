@@ -45,7 +45,7 @@ def register(request):
     context = {
         'title': 'myshop | registration',
         'naviname': 'myshop',
-        'form': UserProfilerForm()
+        'form': form
     }
     return render(request, 'authapp/register.html', context)
 
