@@ -34,4 +34,4 @@ class Command(BaseCommand):
             new_category.save()
 
 # Создаем суперпользователя при помощи менеджера модели
-       super_user = User.objects.create_superuser('yura', 'yuverch@gmail.com', '1')
+#        super_user = User.objects.create_superuser('yura', 'yuverch@gmail.com', '1')
