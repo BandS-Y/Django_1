@@ -20,10 +20,6 @@ class Basket(models.Model):
     def sum(self):
         return self.quantity * self.product.price
 
-    # @property
-    # def get_baskets(self):
-    #     baskets = Basket.objects.filter(user=self.user)
-    #     return baskets
 
     def total_sum(self):
         baskets = Basket.objects.filter(user=self.user)
