@@ -56,8 +56,10 @@ def profile(request):
         form = UserProfilerForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.set_level(request, messages.SUCCESS)
             messages.success(request, 'Данные успешно изменены')
         else:
+            messages.set_level(request, messages.ERROR)
             print(form.errors)
 
     baskets = Basket.objects.filter(user=request.user)

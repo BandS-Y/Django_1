@@ -14,14 +14,14 @@ MODULE_DIR = os.path.dirname(__file__)
 
 def index(request):
     context = {
-        'title': 'Geekshop', }
+        'title': 'MyShop', }
     return render(request, 'mainapp/index.html', context)
 
 
 def products(request):
     # file_path = os.path.join(MODULE_DIR,'fixtures/goods.json')
     context = {
-        'title': 'Geekshop | Каталог',
+        'title': 'MyShop | Каталог',
     }
 
     # context['products'] = json.load(open(file_path,encoding='utf-8'))

@@ -11,4 +11,4 @@ class BasketAdmin(admin.TabularInline):
     model = Basket
     fields = ('product','quantity')
     readonly_fields = ('create_timestamp','update_timestamp')
-    extra = 0
+    extra = 3
