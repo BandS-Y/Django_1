@@ -1,9 +1,12 @@
+from django.conf.global_settings import EMAIL_HOST_USER, DOMAIN_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.mail import send_mail
 from django.shortcuts import render, get_object_or_404
 from django.contrib import auth, messages
 from django.http import HttpResponseRedirect
 from django.views.generic import FormView, UpdateView
+# from django.conf.global_settings import settings
 
 from authapp.forms import UserLoginForm, UserRegisterForm, UserProfilerForm
 from django.urls import reverse, reverse_lazy
@@ -30,14 +33,31 @@ class RegisterListView(FormView,BaseClassContextMixin):
 
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
-            messages.set_level(request, messages.SUCCESS)
-            messages.success(request, 'Вы успешно зарегистрировались!')
-            return HttpResponseRedirect(reverse('authapp:login'))
+            user = form.save()
+            if self.send_verify_link(user):
+                messages.set_level(request, messages.SUCCESS)
+                messages.success(request, 'Вы успешно зарегистрировались!')
+                return HttpResponseRedirect(reverse('authapp:login'))
+            else:
+                messages.set_level(request, messages.ERROR)
+                messages.error(request, form.errors)
         else:
             messages.set_level(request, messages.ERROR)
             messages.error(request, form.errors)
         return render(request, self.template_name, {'form': form})
+
+
+
+    def send_verify_link(self, user):
+        verify_link = reverse('authapp:verify',args=[user.email, user.activation_key])
+        subject = f'Для активации учётной записи {user.username} пройдите по ссылке'
+        message =  f'Для подтверждения учётной записи {user.username} на портале \n {DOMAIN_NAME}{verify_link}'
+        return send_mail(subject,message, EMAIL_HOST_USER, [user.email], fail_silently=False)
+        # return send_mail(title, message, settings.EMAIL_HOST_USER, [user.email], fail_silently=False)
+
+    def verify(self):
+        pass
+
 
 class ProfileFormView(UpdateView,BaseClassContextMixin,UserDispatchMixin):
     template_name = 'authapp/profile.html'
