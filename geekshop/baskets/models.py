@@ -41,9 +41,8 @@ class Basket(models.Model):
 
 
     def delete(self,*args, **kwargs):
-
         self.product.quantity += self.quantity
-        self.save()
+        self.product.save()
         super(Basket, self).delete(*args, **kwargs)
 
     def save(self,*args, **kwargs):
