@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 
 from mainapp.views import index, products
 
+import debug_toolbar
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
@@ -22,4 +24,6 @@ urlpatterns = [
 
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [path('debug/', include(debug_toolbar.urls))]

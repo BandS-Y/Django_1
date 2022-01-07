@@ -20,7 +20,8 @@ window.onload = function () {
             price_arr[i] = 0;
         }
     }
-    console.info('QUANTITY', quantity_arr)
+    console.info("i'm here! 3")
+    console.info('QUANTITY-1', quantity_arr)
     console.info('PRICE', price_arr)
     //
     // 1метод
@@ -79,6 +80,7 @@ window.onload = function () {
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
         let orderitem_product_pk = target.options[target.selectedIndex].value;
 
+        console.info("i'm here! 2")
         console.log(orderitem_num)
         console.log(orderitem_product_pk)
 
@@ -111,6 +113,7 @@ window.onload = function () {
         orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
         let orderitem_product_pk = target.options[target.selectedIndex].value;
 
+        console.info("i'm here! 0")
         console.log(orderitem_num)
         console.log(orderitem_product_pk)
 
