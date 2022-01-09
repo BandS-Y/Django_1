@@ -25,9 +25,11 @@ def products(request, id_category=None, page=1):
         'title': 'MyShop | Каталог',
     }
     if id_category:
-        products= Product.objects.filter(category_id=id_category)
+        # products= Product.objects.filter(category_id=id_category).select_related('category')
+        # products = Product.objects.filter(category_id=id_category).select_related()
+        products = Product.objects.filter(category_id=id_category).select_related('category')
     else:
-        products = Product.objects.all()
+        products = Product.objects.all().select_related('category')
     # if is_active:
     #     context['categories'] = ProductCategory.objects.filter(id=id_category)
 
