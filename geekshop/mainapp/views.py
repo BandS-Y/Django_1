@@ -75,6 +75,8 @@ def products(request, id_category=None, page=1):
     # if is_active:
     #     context['categories'] = ProductCategory.objects.filter(id=id_category)
 
+    products = get_link_product()
+
     paginator = Paginator(products, per_page=3)
 
     try:
@@ -104,7 +106,7 @@ class ProductDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
-        product = self.get_object()
-        context['product'] = product
+        # product = self.get_object()
+        context['product'] = get_product(self.kwargs.get("pk"))
         return context
 
