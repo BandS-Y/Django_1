@@ -60,7 +60,7 @@ def index(request):
         'title': 'MyShop', }
     return render(request, 'mainapp/index.html', context)
 
-
+# cache_page(3600) либо в урлах
 # def products(request, is_active, id_category=None):
 def products(request, id_category=None, page=1):
     context = {
