@@ -2,10 +2,12 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 
 from django.conf import settings
-from django.core import cache
+from django.core.cache import cache
 
 import json
 import os
+
+from django.views.decorators.cache import cache_page, never_cache
 
 from django.views.generic import DetailView
 
